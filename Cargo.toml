@@ -1,0 +1,23 @@
+[package]
+name = "gitice"
+version = "1.0.0"
+authors = ["Harsh Shandilya <me@msfjarvis.dev>"]
+edition = "2018"
+description = "Freeze your local git repositories for easy restoration"
+repository = "https://github.com/msfjarvis/gitice"
+homepage = "https://github.com/msfjarvis/gitice"
+license = "MIT/Apache-2.0"
+keywords = ["git", "snapshot", "backup", "restore"]
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.32"
+clap = { version = "2.33.3", default-features = false, features = ["suggestions", "color"] }
+git2 = "0.13.11"
+toml = "0.5.7"
+walkdir = "2.3.1"
+
+[badges]
+maintenance = { status = "actively-developed" }
