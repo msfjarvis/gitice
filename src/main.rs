@@ -2,12 +2,12 @@ use git2::Repository;
 use std::path::Path;
 use walkdir::WalkDir;
 
-fn main() {
+fn main() -> anyhow::Result<()> {
     let dir = match std::env::args().nth(1) {
         Some(d) => d,
         None => {
             println!("Usage:\n  gitice <dir>\n");
-            return;
+            return Ok(());
         }
     };
     let mut items: Vec<String> = Vec::new();
@@ -16,27 +16,14 @@ fn main() {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
             if git_dir.exists() {
-                let repo = match Repository::open(git_dir) {
-                    Ok(repo) => repo,
-                    Err(e) => {
-                        println!("Failed to open repository: {}", e);
-                        return;
-                    }
-                };
-                let head = match repo.head() {
-                    Ok(head) => head,
-                    Err(e) => {
-                        println!("Failed getting repository head: {}", e);
-                        return;
-                    }
-                };
                 items.push(format!(
                     "{} = {}",
                     entry.path().to_string_lossy().to_string(),
-                    head.name().unwrap()
+                    Repository::open(git_dir)?.head()?.name().unwrap_or("None")
                 ));
             }
         };
     }
     println!("{:#x?}", items);
+    Ok(())
 }
