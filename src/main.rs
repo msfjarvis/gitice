@@ -16,10 +16,15 @@ fn main() -> anyhow::Result<()> {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
             if git_dir.exists() {
+                let repo = Repository::open(git_dir)?;
+                if repo.is_empty()? {
+                    continue;
+                }
+
                 items.push(format!(
                     "{} = {}",
                     entry.path().to_string_lossy().to_string(),
-                    Repository::open(git_dir)?.head()?.name().unwrap_or("None")
+                    repo.head()?.name().unwrap_or("None")
                 ));
             }
         };
