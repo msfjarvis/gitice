@@ -38,7 +38,7 @@ fn main() -> anyhow::Result<()> {
                             upstream
                                 .as_str()
                                 .unwrap_or("None")
-                                .split("/")
+                                .split('/')
                                 .collect::<Vec<&str>>()[2],
                         ) {
                             repos.push(PersistableRepo {
