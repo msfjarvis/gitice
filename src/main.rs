@@ -20,7 +20,7 @@ fn main() -> anyhow::Result<()> {
     };
 
     let mut repos: HashMap<String, PersistableRepo> = HashMap::new();
-    for entry in WalkDir::new(dir).into_iter().filter_map(|e| e.ok()) {
+    for entry in WalkDir::new(dir.clone()).into_iter().filter_map(|e| e.ok()) {
         if entry.file_type().is_dir() {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
@@ -39,12 +39,15 @@ fn main() -> anyhow::Result<()> {
                             // doesn't seem to work with the full name such as `refs/remotes/origin/master`
                             upstream.as_str().unwrap().split('/').collect::<Vec<&str>>()[2],
                         ) {
-                            let path = entry.path().to_string_lossy().to_string();
+                            let path = entry
+                                .path()
+                                .to_string_lossy()
+                                .strip_prefix(&dir)
+                                .unwrap()
+                                .to_string();
                             repos.insert(
                                 path.clone(),
                                 PersistableRepo {
-                                    // Ideally we wanna do this, but it moves `dir`.
-                                    // path: entry.path().to_string_lossy().strip_prefix(dir).unwrap().to_string(),
                                     path,
                                     remote_url: remote.url().unwrap_or("None").to_owned(),
                                     head: head.to_owned(),
