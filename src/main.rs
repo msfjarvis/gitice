@@ -31,13 +31,25 @@ fn main() -> anyhow::Result<()> {
 
                 let head = repo.head()?;
                 if let Some(head) = head.name() {
-                    repos.push(PersistableRepo {
-                        // Ideally we wanna do this, but it moves `dir`.
-                        // path: entry.path().to_string_lossy().strip_prefix(dir).unwrap().to_string(),
-                        path: entry.path().to_string_lossy().to_string(),
-                        remote_url: repo.remotes()?.get(0).unwrap_or("None").to_string(),
-                        head: head.to_string(),
-                    });
+                    if let Ok(upstream) = repo.branch_upstream_name(head) {
+                        if let Ok(remote) = repo.find_remote(
+                            // This is a rather ugly hack, but not sure how else to get the required name
+                            // doesn't seem to work with the full name such as `refs/remotes/origin/master`
+                            upstream
+                                .as_str()
+                                .unwrap_or("None")
+                                .split("/")
+                                .collect::<Vec<&str>>()[2],
+                        ) {
+                            repos.push(PersistableRepo {
+                                // Ideally we wanna do this, but it moves `dir`.
+                                // path: entry.path().to_string_lossy().strip_prefix(dir).unwrap().to_string(),
+                                path: entry.path().to_string_lossy().to_string(),
+                                remote_url: remote.url().unwrap_or("None").to_owned(),
+                                head: head.to_owned(),
+                            });
+                        }
+                    }
                 };
             }
         };
