@@ -26,3 +26,4 @@ target/
 .history
 
 # End of https://www.toptal.com/developers/gitignore/api/rust,visualstudiocode
+gitice.lock
