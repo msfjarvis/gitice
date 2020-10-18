@@ -16,6 +16,8 @@ readme = "README.md"
 anyhow = "1.0.32"
 clap = { version = "2.33.3", default-features = false, features = ["suggestions", "color"] }
 git2 = "0.13.11"
+serde = {version = "1.0.116", default-features = false, features = ["derive"] }
+serde_derive = "1.0.116"
 toml = "0.5.7"
 walkdir = "2.3.1"
 
