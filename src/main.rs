@@ -1,6 +1,14 @@
 use git2::Repository;
+use serde::{Deserialize, Serialize};
 use std::path::Path;
 use walkdir::WalkDir;
+
+#[derive(Debug, Serialize, Deserialize)]
+struct PersistableRepo {
+    pub(crate) path: String,
+    pub(crate) remote_url: String,
+    pub(crate) head: String,
+}
 
 fn main() -> anyhow::Result<()> {
     let dir = match std::env::args().nth(1) {
@@ -10,7 +18,7 @@ fn main() -> anyhow::Result<()> {
             return Ok(());
         }
     };
-    let mut items: Vec<String> = Vec::new();
+    let mut repos: Vec<PersistableRepo> = Vec::new();
     for entry in WalkDir::new(dir).into_iter().filter_map(|e| e.ok()) {
         if entry.file_type().is_dir() {
             let path = format!("{}/.git", entry.path().display());
@@ -21,14 +29,19 @@ fn main() -> anyhow::Result<()> {
                     continue;
                 }
 
-                items.push(format!(
-                    "{} = {}",
-                    entry.path().to_string_lossy().to_string(),
-                    repo.head()?.name().unwrap_or("None")
-                ));
+                let head = repo.head()?;
+                if let Some(head) = head.name() {
+                    repos.push(PersistableRepo {
+                        // Ideally we wanna do this, but it moves `dir`.
+                        // path: entry.path().to_string_lossy().strip_prefix(dir).unwrap().to_string(),
+                        path: entry.path().to_string_lossy().to_string(),
+                        remote_url: repo.remotes()?.get(0).unwrap_or("None").to_string(),
+                        head: head.to_string(),
+                    });
+                };
             }
         };
     }
-    println!("{:#x?}", items);
+    println!("{:#x?}", repos);
     Ok(())
 }
