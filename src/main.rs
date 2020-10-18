@@ -1,6 +1,6 @@
 use git2::Repository;
 use serde::{Deserialize, Serialize};
-use std::path::Path;
+use std::{collections::HashMap, fs, path::Path};
 use walkdir::WalkDir;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -18,11 +18,13 @@ fn main() -> anyhow::Result<()> {
             return Ok(());
         }
     };
-    let mut repos: Vec<PersistableRepo> = Vec::new();
+
+    let mut repos: HashMap<String, PersistableRepo> = HashMap::new();
     for entry in WalkDir::new(dir).into_iter().filter_map(|e| e.ok()) {
         if entry.file_type().is_dir() {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
+
             if git_dir.exists() {
                 let repo = Repository::open(git_dir)?;
                 if repo.is_empty()? {
@@ -41,19 +43,23 @@ fn main() -> anyhow::Result<()> {
                                 .split('/')
                                 .collect::<Vec<&str>>()[2],
                         ) {
-                            repos.push(PersistableRepo {
-                                // Ideally we wanna do this, but it moves `dir`.
-                                // path: entry.path().to_string_lossy().strip_prefix(dir).unwrap().to_string(),
-                                path: entry.path().to_string_lossy().to_string(),
-                                remote_url: remote.url().unwrap_or("None").to_owned(),
-                                head: head.to_owned(),
-                            });
+                            let path = entry.path().to_string_lossy().to_string();
+                            repos.insert(
+                                path.clone(),
+                                PersistableRepo {
+                                    // Ideally we wanna do this, but it moves `dir`.
+                                    // path: entry.path().to_string_lossy().strip_prefix(dir).unwrap().to_string(),
+                                    path,
+                                    remote_url: remote.url().unwrap_or("None").to_owned(),
+                                    head: head.to_owned(),
+                                },
+                            );
                         }
                     }
                 };
             }
         };
     }
-    println!("{:#x?}", repos);
+    fs::write("gitice.lock", toml::to_string(&repos)?).expect("could not write to lockfile!");
     Ok(())
 }
