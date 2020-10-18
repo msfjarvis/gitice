@@ -1,0 +1,19 @@
+["../gitice"]
+path = "../gitice"
+remote_url = "git@github.com:msfjarvis/gitice.git"
+head = "refs/heads/persist-into-lockfile"
+
+["../katbin"]
+path = "../katbin"
+remote_url = "git@github.com:ATechnoHazard/katbin.git"
+head = "refs/heads/master"
+
+["../rust-rocket-template"]
+path = "../rust-rocket-template"
+remote_url = "git@github.com:GDGVIT/rust-rocket-template.git"
+head = "refs/heads/master"
+
+["../healthchecks-rs"]
+path = "../healthchecks-rs"
+remote_url = "git@github.com:ATechnoHazard/healthchecks-rs.git"
+head = "refs/heads/develop"

@@ -37,11 +37,7 @@ fn main() -> anyhow::Result<()> {
                         if let Ok(remote) = repo.find_remote(
                             // This is a rather ugly hack, but not sure how else to get the required name
                             // doesn't seem to work with the full name such as `refs/remotes/origin/master`
-                            upstream
-                                .as_str()
-                                .unwrap_or("None")
-                                .split('/')
-                                .collect::<Vec<&str>>()[2],
+                            upstream.as_str().unwrap().split('/').collect::<Vec<&str>>()[2],
                         ) {
                             let path = entry.path().to_string_lossy().to_string();
                             repos.insert(
