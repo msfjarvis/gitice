@@ -5,7 +5,6 @@ use walkdir::WalkDir;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct PersistableRepo {
-    pub(crate) path: String,
     pub(crate) remote_url: String,
     pub(crate) head: String,
 }
@@ -46,9 +45,8 @@ fn main() -> anyhow::Result<()> {
                                 .unwrap()
                                 .to_string();
                             repos.insert(
-                                path.clone(),
+                                path,
                                 PersistableRepo {
-                                    path,
                                     remote_url: remote.url().unwrap_or("None").to_owned(),
                                     head: head.to_owned(),
                                 },
