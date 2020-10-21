@@ -1,9 +1,10 @@
-use git2::{Cred, RemoteCallbacks, Repository};
+use git2::Repository;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
     fs,
     path::{Path, PathBuf},
+    process::Command,
 };
 use walkdir::WalkDir;
 
@@ -81,35 +82,21 @@ fn thaw_repos(dir: String) -> anyhow::Result<()> {
     let lockfile = fs::read_to_string("gitice.lock").expect("unable to read lockfile!");
     let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
 
-    let mut callbacks = RemoteCallbacks::new();
-    callbacks.credentials(|_url, username_from_url, _allowed_types| {
-        Cred::ssh_key(
-            username_from_url.unwrap(),
-            None,
-            Path::new(&format!(
-                "{}/.ssh/id_rsa",
-                std::env::var("HOME").expect("unable to find homedir!")
-            )),
-            // TODO: implement for keys that require a passphrase
-            None,
-        )
-    });
-
-    let mut fo = git2::FetchOptions::new();
-    fo.remote_callbacks(callbacks);
-
-    let mut builder = git2::build::RepoBuilder::new();
-    builder.fetch_options(fo);
-
     for (name, repo) in repos {
-        match builder.clone(&repo.remote_url, PathBuf::from(&dir).join(&name).as_path()) {
-            Ok(_) => {
-                println!("Thawed {}", name);
-            }
-            Err(e) => {
-                println!("Error thawing {}: {}. Continuing...", name, e);
-            }
-        };
+        let output = Command::new("git")
+            .args(&[
+                "clone",
+                &repo.remote_url,
+                PathBuf::from(&dir).join(&name).to_str().unwrap(),
+            ])
+            .output()
+            .expect("Failed to run `git clone`. Perhaps git is not installed?");
+
+        if output.status.success() {
+            println!("Thawed {} successfully.", name)
+        } else {
+            println!("{}", std::str::from_utf8(&output.stderr)?)
+        }
     }
 
     Ok(())
