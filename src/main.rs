@@ -26,6 +26,7 @@ fn main() -> anyhow::Result<()> {
         .subcommand(
             App::new("freeze")
             .about("Generate a gitice.lock file with all the repositories in the given directory")
+            .setting(AppSettings::ColoredHelp)
             .args(&[Arg::with_name("directory")
                 .help("Directory to look for Git repos in")
                 .required(true)
@@ -34,6 +35,7 @@ fn main() -> anyhow::Result<()> {
         .subcommand(
             App::new("thaw")
                 .about("Given a gitice.lock and a directory, clones back all the repositories from the lockfile in the directory")
+                .setting(AppSettings::ColoredHelp)
                 .args(&[
                     Arg::with_name("directory")
                     .help("Directory to restore repositories in")
