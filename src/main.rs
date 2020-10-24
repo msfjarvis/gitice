@@ -17,7 +17,7 @@ struct PersistableRepo {
 }
 
 fn main() -> anyhow::Result<()> {
-    let matches = App::new("hcctl")
+    let matches = App::new("gitice")
         .about("Command-line tool for backing up and restoring multiple Git repositories from a directory")
         .version(crate_version!())
         .setting(AppSettings::ColoredHelp)
