@@ -113,8 +113,8 @@ fn freeze_repos(dir: &str) -> anyhow::Result<()> {
 }
 
 fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
-    let lockfile =
-        fs::read_to_string(lockfile).unwrap_or_else(|_| panic!("unable to read lockfile from {}", lockfile));
+    let lockfile = fs::read_to_string(lockfile)
+        .unwrap_or_else(|_| panic!("unable to read lockfile from {}", lockfile));
     let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
 
     for (name, repo) in repos {
