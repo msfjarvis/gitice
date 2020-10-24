@@ -66,7 +66,7 @@ fn main() -> anyhow::Result<()> {
 
 fn freeze_repos(dir: &str) -> anyhow::Result<()> {
     let mut repos: HashMap<String, PersistableRepo> = HashMap::new();
-    for entry in WalkDir::new(dir.clone()).into_iter().filter_map(|e| e.ok()) {
+    for entry in WalkDir::new(dir).into_iter().filter_map(|e| e.ok()) {
         if entry.file_type().is_dir() {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
@@ -114,7 +114,7 @@ fn freeze_repos(dir: &str) -> anyhow::Result<()> {
 
 fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
     let lockfile =
-        fs::read_to_string(lockfile).expect(&format!("unable to read lockfile from {}", lockfile));
+        fs::read_to_string(lockfile).unwrap_or_else(|_| panic!("unable to read lockfile from {}", lockfile));
     let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
 
     for (name, repo) in repos {
