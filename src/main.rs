@@ -89,8 +89,8 @@ fn freeze_repos(dir: &str) -> anyhow::Result<()> {
                         ) {
                             let path = entry
                                 .path()
-                                .to_string_lossy()
-                                .strip_prefix(&dir)
+                                .strip_prefix(Path::new(dir))?
+                                .to_str()
                                 .unwrap()
                                 .to_string();
                             repos.insert(
