@@ -1,7 +1,7 @@
 [package]
 name = "gitice"
 version = "1.0.0"
-authors = ["Harsh Shandilya <me@msfjarvis.dev>"]
+authors = ["Harsh Shandilya <me@msfjarvis.dev>", "Amogh Lele <amolele@gmail.com>"]
 edition = "2018"
 description = "Freeze your local git repositories for easy restoration"
 repository = "https://github.com/msfjarvis/gitice"
