@@ -1,4 +1,4 @@
-use clap::{AppSettings, crate_authors, crate_version, Clap};
+use clap::{crate_authors, crate_version, AppSettings, Clap};
 
 #[derive(Clap)]
 #[clap(
