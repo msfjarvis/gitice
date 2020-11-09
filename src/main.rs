@@ -27,8 +27,8 @@ fn main() -> anyhow::Result<()> {
             App::new("freeze")
             .about("Generate a gitice.lock file with all the repositories in the given directory")
             .setting(AppSettings::ColoredHelp)
-            .args(&[Arg::with_name("directory")
-                .help("Directory to look for Git repos in")
+            .args(&[Arg::new("directory")
+                .about("Directory to look for Git repos in")
                 .required(true)
                 .index(1)]),
             )
@@ -37,13 +37,13 @@ fn main() -> anyhow::Result<()> {
                 .about("Given a gitice.lock and a directory, clones back all the repositories from the lockfile in the directory")
                 .setting(AppSettings::ColoredHelp)
                 .args(&[
-                    Arg::with_name("directory")
-                    .help("Directory to restore repositories in")
+                    Arg::new("directory")
+                    .about("Directory to restore repositories in")
                     .required(true)
                     .index(1),
-                    Arg::with_name("lockfile")
-                    .help("The lockfile to restore repositories from")
-                    .short("l")
+                    Arg::new("lockfile")
+                    .about("The lockfile to restore repositories from")
+                    .short('l')
                     .long("lockfile")
                     .required(false)
                     .default_value("gitice.lock")
@@ -51,15 +51,12 @@ fn main() -> anyhow::Result<()> {
         )
         .get_matches();
 
-    match matches.subcommand() {
-        ("freeze", m) => freeze_repos(m.unwrap().value_of("directory").unwrap())?,
-        ("thaw", m) => {
-            let m = m.unwrap();
-            thaw_repos(
-                m.value_of("directory").unwrap(),
-                m.value_of("lockfile").unwrap(),
-            )?
-        }
+    match matches.subcommand().unwrap() {
+        ("freeze", m) => freeze_repos(m.value_of("directory").unwrap())?,
+        ("thaw", m) => thaw_repos(
+            m.value_of("directory").unwrap(),
+            m.value_of("lockfile").unwrap(),
+        )?,
         (cmd, _) => return Err(anyhow!("unknown subcommand: {}", cmd)),
     }
 
