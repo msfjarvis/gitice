@@ -1,7 +1,7 @@
-use clap::{crate_version, Clap};
+use clap::{crate_authors, crate_version, Clap};
 
 #[derive(Clap)]
-#[clap(version = crate_version!(), author = "Harsh Shandilya <me@msfjarvis.dev>")]
+#[clap(version = crate_version!(), author = crate_authors!())]
 pub(crate) struct Opts {
     #[clap(subcommand)]
     pub(crate) subcommand: SubCommand,
