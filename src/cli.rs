@@ -1,7 +1,13 @@
-use clap::{crate_authors, crate_version, Clap};
+use clap::{AppSettings, crate_authors, crate_version, Clap};
 
 #[derive(Clap)]
-#[clap(version = crate_version!(), author = crate_authors!())]
+#[clap(
+    version = crate_version!(),
+    author = crate_authors!(),
+    setting = AppSettings::ColoredHelp,
+    setting = AppSettings::DeriveDisplayOrder,
+    setting = AppSettings::SubcommandRequiredElseHelp,
+)]
 pub(crate) struct Opts {
     #[clap(subcommand)]
     pub(crate) subcommand: SubCommand,
