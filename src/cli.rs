@@ -21,6 +21,7 @@ pub(crate) enum SubCommand {
 
 /// recursively find git repos and record their states into a lockfile
 #[derive(Clap)]
+#[clap(setting = AppSettings::ColoredHelp)]
 pub(crate) struct Freeze {
     /// directory to search and freeze repos from.
     pub(crate) directory: String,
@@ -28,6 +29,7 @@ pub(crate) struct Freeze {
 
 /// takes the given
 #[derive(Clap)]
+#[clap(setting = AppSettings::ColoredHelp)]
 pub(crate) struct Thaw {
     /// directory to put cloned repos into.
     pub(crate) directory: String,
