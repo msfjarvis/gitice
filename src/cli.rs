@@ -1,9 +1,11 @@
-use clap::{crate_authors, crate_version, AppSettings, Clap};
+use clap::{crate_authors, crate_description, crate_name, crate_version, AppSettings, Clap};
 
 #[derive(Clap)]
 #[clap(
+    name = crate_name!(),
     version = crate_version!(),
     author = crate_authors!(),
+    about = crate_description!(),
     setting = AppSettings::ColoredHelp,
     setting = AppSettings::DeriveDisplayOrder,
     setting = AppSettings::SubcommandRequiredElseHelp,
