@@ -13,13 +13,13 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.35"
+anyhow = "1.0.40"
 clap = "3.0.0-beta.2"
-git2 = "0.13.12"
-serde = { version = "1.0.118", default-features = false, features = ["derive"] }
-serde_derive = "1.0.118"
-toml = "0.5.7"
-walkdir = "2.3.1"
+git2 = "0.13.20"
+serde = { version = "1.0.126", default-features = false, features = ["derive"] }
+serde_derive = "1.0.126"
+toml = "0.5.8"
+walkdir = "2.3.2"
 
 [badges]
 maintenance = { status = "actively-developed" }
