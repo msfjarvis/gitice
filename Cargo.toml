@@ -9,6 +9,7 @@ homepage = "https://github.com/msfjarvis/gitice"
 license = "MIT/Apache-2.0"
 keywords = ["git", "snapshot", "backup", "restore"]
 readme = "README.md"
+include = ["src/**/*", "LICENSE-*", "README.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
