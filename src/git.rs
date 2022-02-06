@@ -73,9 +73,9 @@ pub(crate) fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
             .expect("Failed to run `git clone`. Perhaps git is not installed?");
 
         if output.status.success() {
-            println!("Thawed {} successfully.", name)
+            println!("Thawed {} successfully.", name);
         } else {
-            println!("{}", std::str::from_utf8(&output.stderr)?)
+            println!("{}", std::str::from_utf8(&output.stderr)?);
         }
     }
 

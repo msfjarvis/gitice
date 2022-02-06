@@ -1,37 +1,28 @@
-use clap::{crate_authors, crate_description, crate_name, crate_version, AppSettings, Clap};
+use clap::{AppSettings, Parser};
 
-#[derive(Clap)]
-#[clap(
-    name = crate_name!(),
-    version = crate_version!(),
-    author = crate_authors!(),
-    about = crate_description!(),
-    setting = AppSettings::ColoredHelp,
-    setting = AppSettings::DeriveDisplayOrder,
-    setting = AppSettings::SubcommandRequiredElseHelp,
-)]
+#[derive(Parser)]
+#[clap(author, version, about)]
+#[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 pub(crate) struct Opts {
     #[clap(subcommand)]
     pub(crate) subcommand: SubCommand,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 pub(crate) enum SubCommand {
     Freeze(Freeze),
     Thaw(Thaw),
 }
 
 /// recursively find git repos and record their states into a lockfile
-#[derive(Clap)]
-#[clap(setting = AppSettings::ColoredHelp)]
+#[derive(Parser)]
 pub(crate) struct Freeze {
     /// directory to search and freeze repos from.
     pub(crate) directory: String,
 }
 
-/// takes the given
-#[derive(Clap)]
-#[clap(setting = AppSettings::ColoredHelp)]
+/// takes the given lockfile and clones them back into the given directory
+#[derive(Parser)]
 pub(crate) struct Thaw {
     /// directory to put cloned repos into.
     pub(crate) directory: String,

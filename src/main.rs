@@ -2,9 +2,8 @@ pub(crate) mod cli;
 pub(crate) mod git;
 pub(crate) mod model;
 
-use clap::Clap;
-use cli::Opts;
-use cli::SubCommand;
+use clap::Parser;
+use cli::{Opts, SubCommand};
 use git::freeze_repos;
 use git::thaw_repos;
 
