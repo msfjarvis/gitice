@@ -1,15 +1,16 @@
 with import <nixpkgs> { overlays = [ (import <rust-overlay>) ]; };
 mkShell {
-  RUSTFLAGS = "";
   buildInputs = [
-    (rust-bin.selectLatestNightlyWith (toolchain:
-      toolchain.default.override {
-        extensions = [ "rust-src" "rustfmt-preview" ];
-      }))
+    (rust-bin.stable.latest.default.override {
+      extensions = [ "rust-src" "rustfmt-preview" ];
+      targets =
+        pkgs.lib.optionals pkgs.stdenv.isDarwin [ "aarch64-apple-darwin" ]
+        ++ pkgs.lib.optionals pkgs.stdenv.isLinux
+        [ "x86_64-unknown-linux-musl" ];
+    })
     pkg-config
     openssl
-    clang_12
-  ] ++ lib.optionals stdenv.isDarwin [
-    pkgs.darwin.apple_sdk.frameworks.Security
-  ];
+    clang_13
+  ] ++ lib.optionals stdenv.isDarwin
+    [ pkgs.darwin.apple_sdk.frameworks.Security ];
 }
