@@ -10,7 +10,7 @@ use walkdir::WalkDir;
 
 pub(crate) fn freeze_repos(dir: &str) -> anyhow::Result<()> {
     let mut repos: HashMap<String, PersistableRepo> = HashMap::new();
-    for entry in WalkDir::new(dir).into_iter().filter_map(|e| e.ok()) {
+    for entry in WalkDir::new(dir).into_iter().filter_map(std::result::Result::ok) {
         if entry.file_type().is_dir() {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
