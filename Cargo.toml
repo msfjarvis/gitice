@@ -15,7 +15,7 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 
 [dependencies]
 anyhow = "1.0.58"
-clap = { version = "3.2.12", features = [ "color", "deprecated", "derive" ] }
+clap = { version = "3.2.13", features = [ "color", "deprecated", "derive" ] }
 git2 = { version = "0.14.4", default-features = false, features = ["vendored-libgit2", "vendored-openssl"] }
 serde = { version = "1.0.139", default-features = false, features = ["derive"] }
 serde_derive = "1.0.139"
