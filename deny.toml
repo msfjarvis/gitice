@@ -25,6 +25,7 @@ allow-osi-fsf-free = "neither"
 default = "deny"
 confidence-threshold = 0.8
 exceptions = [
+  { allow = ["Unicode-DFS-2016"], name = "unicode-ident", version = "*" },
 ]
 
 [licenses.private]
