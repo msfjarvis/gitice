@@ -1,10 +1,9 @@
-use clap::{AppSettings, Parser};
+use clap::Parser;
 
 #[derive(Parser)]
-#[clap(author, version, about)]
-#[clap(global_setting(AppSettings::DeriveDisplayOrder))]
+#[command(author, version, about)]
 pub(crate) struct Opts {
-    #[clap(subcommand)]
+    #[command(subcommand)]
     pub(crate) subcommand: SubCommand,
 }
 
@@ -27,6 +26,16 @@ pub(crate) struct Thaw {
     /// directory to put cloned repos into.
     pub(crate) directory: String,
     /// the lockfile to restore repositories from.
-    #[clap(default_value = "gitice.lock")]
+    #[arg(default_value = "gitice.lock")]
     pub(crate) lockfile: String,
+}
+
+#[cfg(test)]
+mod test {
+    use super::Opts;
+
+    #[test]
+    fn cli_assert() {
+        <Opts as clap::CommandFactory>::command().debug_assert()
+    }
 }
