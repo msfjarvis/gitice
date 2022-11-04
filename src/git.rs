@@ -67,7 +67,7 @@ pub(crate) fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
     for (name, repo) in repos {
         println!("Cloning {} from {}", &name, &repo.remote_url);
         let output = Command::new("git")
-            .args(&[
+            .args([
                 "clone",
                 &repo.remote_url,
                 PathBuf::from(&dir).join(&name).to_str().unwrap(),
@@ -76,7 +76,7 @@ pub(crate) fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
             .expect("Failed to run `git clone`. Perhaps git is not installed?");
 
         if output.status.success() {
-            println!("Thawed {} successfully.", name);
+            println!("Thawed {name} successfully.");
         } else {
             println!("{}", std::str::from_utf8(&output.stderr)?);
         }
