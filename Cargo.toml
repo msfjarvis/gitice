@@ -17,8 +17,8 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 anyhow = "1.0.66"
 clap = { version = "4.0.29", features = [ "color", "deprecated", "derive" ] }
 git2 = { version = "0.15.0", default-features = false, features = ["vendored-libgit2", "vendored-openssl"] }
-serde = { version = "1.0.150", default-features = false, features = ["derive"] }
-serde_derive = "1.0.150"
+serde = { version = "1.0.151", default-features = false, features = ["derive"] }
+serde_derive = "1.0.151"
 toml = "0.5.10"
 walkdir = "2.3.2"
 
