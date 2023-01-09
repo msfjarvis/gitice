@@ -1,4 +1,4 @@
-# gitice
+# gitice [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 Rust tool to create a 'lockfile' of the git repositories present under a directory, and allow re-cloning them when given the previously generated lockfile.
 
