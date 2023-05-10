@@ -93,11 +93,9 @@
       devShells.default = pkgs.mkShell {
         inputsFrom = builtins.attrValues self.checks;
 
-        nativeBuildInputs = with pkgs; [
-          cargo-nextest
-          cargo-release
-          rustStable
-        ];
+        nativeBuildInputs = with pkgs; [cargo-nextest rustStable];
+
+        CARGO_REGISTRIES_CRATES_IO_PROTOCOL = "sparse";
       };
     });
 }
