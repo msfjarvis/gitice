@@ -53,7 +53,7 @@
       rustStable =
         pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
-      src = ./.;
+      src = craneLib.cleanCargoSource ./.;
       nativeBuildInputs = with pkgs; [
         perl
         pkg-config
@@ -63,24 +63,26 @@
         [pkgs.openssl]
         ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
         [pkgs.darwin.apple_sdk.frameworks.Security];
-      cargoArtifacts = craneLib.buildDepsOnly {inherit src buildInputs nativeBuildInputs;};
 
-      gitice = craneLib.buildPackage {
+      cargoArtifacts = craneLib.buildDepsOnly {
         inherit src buildInputs nativeBuildInputs;
-        doCheck = false;
       };
-      gitice-clippy = craneLib.cargoClippy {
-        inherit cargoArtifacts src buildInputs nativeBuildInputs;
+
+      commonArgs = {
+        inherit src cargoArtifacts buildInputs nativeBuildInputs;
         cargoClippyExtraArgs = "--all-targets -- --deny warnings";
       };
-      gitice-fmt = craneLib.cargoFmt {inherit src;};
+
+      gitice = craneLib.buildPackage (commonArgs // {doCheck = false;});
+      gitice-clippy = craneLib.cargoClippy (commonArgs // {});
+      gitice-fmt = craneLib.cargoFmt (commonArgs // {});
       gitice-audit =
-        craneLib.cargoAudit {inherit src advisory-db;};
-      gitice-nextest = craneLib.cargoNextest {
-        inherit cargoArtifacts src buildInputs nativeBuildInputs;
-        partitions = 1;
-        partitionType = "count";
-      };
+        craneLib.cargoAudit (commonArgs // {inherit advisory-db;});
+      gitice-nextest = craneLib.cargoNextest (commonArgs
+        // {
+          partitions = 1;
+          partitionType = "count";
+        });
     in {
       checks = {
         inherit gitice gitice-audit gitice-clippy gitice-fmt gitice-nextest;
