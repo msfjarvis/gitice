@@ -1,3 +1,4 @@
+#![feature(let_chains)]
 pub(crate) mod cli;
 pub(crate) mod git;
 pub(crate) mod logging;
