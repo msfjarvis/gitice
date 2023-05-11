@@ -54,16 +54,8 @@
         pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
       craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
       src = craneLib.cleanCargoSource ./.;
-      nativeBuildInputs = with pkgs; [
-        perl
-        pkg-config
-        openssl
-      ];
-      buildInputs =
-        [pkgs.openssl]
-        ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
-        [pkgs.darwin.apple_sdk.frameworks.Security];
-
+      nativeBuildInputs = [];
+      buildInputs = [];
       cargoArtifacts = craneLib.buildDepsOnly {
         inherit src buildInputs nativeBuildInputs;
       };
