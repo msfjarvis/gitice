@@ -1,5 +1,6 @@
 pub(crate) mod cli;
 pub(crate) mod git;
+pub(crate) mod logging;
 pub(crate) mod model;
 
 use clap::Parser;
@@ -8,6 +9,7 @@ use git::freeze_repos;
 use git::thaw_repos;
 
 fn main() -> anyhow::Result<()> {
+    logging::init()?;
     let opts = Opts::parse();
 
     match opts.subcommand {

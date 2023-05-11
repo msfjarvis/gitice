@@ -20,6 +20,8 @@ git2 = { version = "0.17.1", default-features = false, features = ["vendored-lib
 serde = { version = "1.0.162", default-features = false, features = ["derive"] }
 serde_derive = "1.0.162"
 toml = "0.7.3"
+tracing = "0.1.37"
+tracing-subscriber = "0.3.17"
 walkdir = "2.3.3"
 
 [badges]
