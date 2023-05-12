@@ -1,4 +1,5 @@
 use crate::model::PersistableRepo;
+use anyhow::Context;
 use gix::{sec::trust::DefaultForLevel, Repository, ThreadSafeRepository};
 use std::{
     collections::HashMap,
@@ -72,7 +73,7 @@ pub(crate) fn freeze_repos(dir: &str) -> anyhow::Result<()> {
             }
         }
     }
-    fs::write("gitice.lock", toml::to_string(&repos)?).expect("could not write to lockfile!");
+    fs::write("gitice.lock", toml::to_string(&repos)?).context("could not write to lockfile!")?;
     tracing::info!(
         "Successfully generated lockfile with {} repos",
         &repos.len()
@@ -81,12 +82,11 @@ pub(crate) fn freeze_repos(dir: &str) -> anyhow::Result<()> {
 }
 
 pub(crate) fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
-    let lockfile = fs::read_to_string(lockfile)
-        .unwrap_or_else(|_| panic!("unable to read lockfile from {}", lockfile));
+    let lockfile = fs::read_to_string(lockfile).context(format!("Failed to read {lockfile}"))?;
     let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
 
     for (name, repo) in repos {
-        println!("Cloning {} from {}", &name, &repo.remote_url);
+        tracing::info!("Cloning {name} from {}", &repo.remote_url);
         let output = Command::new("git")
             .args([
                 "clone",
@@ -94,12 +94,12 @@ pub(crate) fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
                 PathBuf::from(&dir).join(&name).to_str().unwrap(),
             ])
             .output()
-            .expect("Failed to run `git clone`. Perhaps git is not installed?");
+            .context("Failed to run `git clone`. Perhaps git is not installed?")?;
 
         if output.status.success() {
-            println!("Thawed {name} successfully.");
+            tracing::info!("Thawed {} successfully.", name);
         } else {
-            println!("{}", std::str::from_utf8(&output.stderr)?);
+            tracing::error!("{}", std::str::from_utf8(&output.stderr)?);
         }
     }
 
