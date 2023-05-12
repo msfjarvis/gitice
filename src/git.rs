@@ -9,7 +9,7 @@ use std::{
 };
 use walkdir::WalkDir;
 
-pub(crate) fn freeze_repos(dir: &str) -> anyhow::Result<()> {
+pub fn freeze_repos(dir: &str) -> anyhow::Result<()> {
     let mut repos: HashMap<String, PersistableRepo> = HashMap::new();
     for entry in WalkDir::new(dir)
         .into_iter()
@@ -81,7 +81,7 @@ pub(crate) fn freeze_repos(dir: &str) -> anyhow::Result<()> {
     Ok(())
 }
 
-pub(crate) fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
+pub fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
     let lockfile = fs::read_to_string(lockfile).context(format!("Failed to read {lockfile}"))?;
     let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
 

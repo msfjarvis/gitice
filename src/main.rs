@@ -1,13 +1,12 @@
 #![feature(let_chains)]
-pub(crate) mod cli;
-pub(crate) mod git;
-pub(crate) mod logging;
-pub(crate) mod model;
+pub mod cli;
+pub mod git;
+pub mod logging;
+pub mod model;
 
 use clap::Parser;
 use cli::{Opts, SubCommand};
-use git::freeze_repos;
-use git::thaw_repos;
+use git::{freeze_repos, thaw_repos};
 
 fn main() -> anyhow::Result<()> {
     logging::init()?;

@@ -10,7 +10,7 @@ fn configure_tracing(filter: Targets) -> Result<(), SetGlobalDefaultError> {
     set_global_default(subscriber)
 }
 
-pub(crate) fn init() -> Result<(), SetGlobalDefaultError> {
+pub fn init() -> Result<(), SetGlobalDefaultError> {
     let tracing_filter = Targets::new().with_target("gitice", Level::TRACE);
     configure_tracing(tracing_filter)
 }
