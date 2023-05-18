@@ -106,6 +106,32 @@ pub fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
     Ok(())
 }
 
+pub fn thaw(dir: &str, lockfile: &str) -> anyhow::Result<()> {
+    let lockfile = fs::read_to_string(lockfile).context(format!("Failed to read {lockfile}"))?;
+    let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
+
+    for (name, repo) in repos {
+        tracing::info!("Cloning {name} from {}", &repo.remote_url);
+
+        let output = Command::new("git")
+            .args([
+                "clone",
+                &repo.remote_url,
+                PathBuf::from(&dir).join(&name).to_str().unwrap(),
+            ])
+            .output()
+            .context("Failed to run `git clone`. Perhaps git is not installed?")?;
+
+        if output.status.success() {
+            tracing::info!("Thawed {} successfully.", name);
+        } else {
+            tracing::error!("{}", std::str::from_utf8(&output.stderr)?);
+        }
+    }
+
+    Ok(())
+}
+
 fn get_current_branch(repository: &Repository) -> Option<String> {
     let name = repository.head_name().ok()??;
     let shorthand = name.shorten();
