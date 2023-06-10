@@ -97,7 +97,7 @@ pub fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
             .context("Failed to run `git clone`. Perhaps git is not installed?")?;
 
         if output.status.success() {
-            tracing::info!("Thawed {} successfully.", name);
+            tracing::info!("Thawed {name} successfully.");
         } else {
             tracing::error!("{}", std::str::from_utf8(&output.stderr)?);
         }
@@ -123,7 +123,7 @@ pub fn thaw(dir: &str, lockfile: &str) -> anyhow::Result<()> {
             .context("Failed to run `git clone`. Perhaps git is not installed?")?;
 
         if output.status.success() {
-            tracing::info!("Thawed {} successfully.", name);
+            tracing::info!("Thawed {name} successfully.");
         } else {
             tracing::error!("{}", std::str::from_utf8(&output.stderr)?);
         }
