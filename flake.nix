@@ -45,12 +45,12 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
 
-      rustStable = (import fenix {inherit pkgs;}).fromToolchainFile {
+      rustNightly = (import fenix {inherit pkgs;}).fromToolchainFile {
         file = ./rust-toolchain.toml;
         sha256 = "sha256-1elQHBWEQRZ5qrEtJi6uhvwUNKedyQusyhATdBywep0=";
       };
 
-      craneLib = (crane.mkLib pkgs).overrideToolchain rustStable;
+      craneLib = (crane.mkLib pkgs).overrideToolchain rustNightly;
       src = craneLib.cleanCargoSource ./.;
       nativeBuildInputs = [];
       buildInputs = [];
@@ -85,7 +85,7 @@
       devShells.default = pkgs.mkShell {
         inputsFrom = builtins.attrValues self.checks;
 
-        nativeBuildInputs = with pkgs; [cargo-dist cargo-nextest cargo-release rustStable];
+        nativeBuildInputs = with pkgs; [cargo-dist cargo-nextest cargo-release rustNightly];
 
         CARGO_REGISTRIES_CRATES_IO_PROTOCOL = "sparse";
       };
