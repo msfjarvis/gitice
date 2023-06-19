@@ -1,6 +1,6 @@
 [package]
 name = "gitice"
-version = "2.0.1"
+version = "2.0.2"
 authors = ["Harsh Shandilya <me@msfjarvis.dev>", "Amogh Lele <amolele@gmail.com>"]
 edition = "2021"
 description = "Freeze your local git repositories for easy restoration"
