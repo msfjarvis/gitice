@@ -13,6 +13,10 @@
   inputs.crane.inputs.flake-utils.follows = "flake-utils";
   inputs.crane.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.devshell.url = "github:numtide/devshell";
+  inputs.devshell.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.devshell.inputs.systems.follows = "systems";
+
   inputs.fenix.url = "github:nix-community/fenix";
   inputs.fenix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -27,12 +31,16 @@
     nixpkgs,
     advisory-db,
     crane,
+    devshell,
     fenix,
     flake-utils,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [devshell.overlays.default];
+      };
 
       rustNightly = (import fenix {inherit pkgs;}).fromToolchainFile {
         file = ./rust-toolchain.toml;
@@ -71,12 +79,22 @@
 
       apps.default = flake-utils.lib.mkApp {drv = gitice;};
 
-      devShells.default = pkgs.mkShell {
-        inputsFrom = builtins.attrValues self.checks;
+      devShells.default = pkgs.devshell.mkShell {
+        bash = {interactive = "";};
 
-        nativeBuildInputs = with pkgs; [cargo-dist cargo-nextest cargo-release rustNightly];
+        env = [
+          {
+            name = "DEVSHELL_NO_MOTD";
+            value = 1;
+          }
+        ];
 
-        CARGO_REGISTRIES_CRATES_IO_PROTOCOL = "sparse";
+        packages = with pkgs; [
+          cargo-dist
+          cargo-nextest
+          cargo-release
+          rustNightly
+        ];
       };
     });
 }
