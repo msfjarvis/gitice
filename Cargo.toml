@@ -1,7 +1,10 @@
 [package]
 name = "gitice"
 version = "2.0.2"
-authors = ["Harsh Shandilya <me@msfjarvis.dev>", "Amogh Lele <amolele@gmail.com>"]
+authors = [
+  "Harsh Shandilya <me@msfjarvis.dev>",
+  "Amogh Lele <amolele@gmail.com>",
+]
 edition = "2021"
 description = "Freeze your local git repositories for easy restoration"
 repository = "https://github.com/msfjarvis/gitice"
@@ -15,7 +18,7 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 
 [dependencies]
 anyhow = "1.0.71"
-clap = { version = "4.3.8", features = [ "color", "deprecated", "derive" ] }
+clap = { version = "4.3.8", features = ["color", "deprecated", "derive"] }
 gix = "0.46.0"
 serde = { version = "1.0.164", default-features = false }
 serde_derive = "1.0.164"
@@ -43,4 +46,9 @@ ci = ["github"]
 # The installers to generate for each app
 installers = ["shell", "powershell"]
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["x86_64-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "aarch64-apple-darwin"]
+targets = [
+  "x86_64-unknown-linux-gnu",
+  "x86_64-apple-darwin",
+  "x86_64-pc-windows-msvc",
+  "aarch64-apple-darwin",
+]
