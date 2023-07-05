@@ -18,7 +18,7 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 
 [dependencies]
 anyhow = "1.0.71"
-clap = { version = "4.3.10", features = ["color", "deprecated", "derive"] }
+clap = { version = "4.3.11", features = ["color", "deprecated", "derive"] }
 gix = "0.48.0"
 serde = { version = "1.0.166", default-features = false }
 serde_derive = "1.0.166"
