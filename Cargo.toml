@@ -20,8 +20,8 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 anyhow = "1.0.71"
 clap = { version = "4.3.11", features = ["color", "deprecated", "derive"] }
 gix = "0.48.0"
-serde = { version = "1.0.170", default-features = false }
-serde_derive = "1.0.170"
+serde = { version = "1.0.171", default-features = false }
+serde_derive = "1.0.171"
 toml = "0.7.6"
 tracing = "0.1.37"
 tracing-subscriber = "0.3.17"
