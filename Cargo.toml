@@ -17,7 +17,7 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.71"
+anyhow = "1.0.72"
 clap = { version = "4.3.12", features = ["color", "deprecated", "derive"] }
 gix = "0.48.0"
 serde = { version = "1.0.171", default-features = false }
