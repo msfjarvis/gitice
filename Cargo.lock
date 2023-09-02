@@ -598,9 +598,9 @@ dependencies = [
 
 [[package]]
 name = "gix-date"
-version = "0.7.3"
+version = "0.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01e476b4e156f6044d35bf1ce2079d97b7207515cfb5a2bb6fcd489bb697d700"
+checksum = "0a825babda995d788e30d306a49dacd1e93d5f5d33d53c7682d0347cef40333c"
 dependencies = [
  "bstr",
  "itoa",
