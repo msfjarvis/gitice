@@ -19,7 +19,7 @@ include = ["src/**/*", "LICENSE-*", "README.md"]
 [dependencies]
 anyhow = "1.0.75"
 clap = { version = "4.4.6", features = ["color", "deprecated", "derive"] }
-gix = "0.55.1"
+gix = "0.55.2"
 serde = { version = "1.0.189", default-features = false }
 serde_derive = "1.0.189"
 toml = "0.8.2"
