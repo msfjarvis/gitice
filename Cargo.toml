@@ -23,7 +23,7 @@ gix = "0.55.2"
 serde = { version = "1.0.189", default-features = false }
 serde_derive = "1.0.189"
 toml = "0.8.2"
-tracing = "0.1.39"
+tracing = "0.1.40"
 tracing-subscriber = "0.3.17"
 walkdir = "2.4.0"
 
