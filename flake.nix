@@ -97,6 +97,7 @@
           cargo-dist-unstable
           cargo-nextest
           cargo-release
+          git-cliff
           rustNightly
         ];
       };
