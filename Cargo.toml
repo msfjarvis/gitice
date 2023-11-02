@@ -14,6 +14,10 @@ keywords = ["git", "snapshot", "backup", "restore"]
 readme = "README.md"
 include = ["src/**/*", "LICENSE-*", "README.md"]
 
+[package.metadata.wix]
+upgrade-guid = "90907703-6CAD-4F13-AB11-D03BF51966EC"
+path-guid = "2995A4B3-1534-48CC-9D44-62713E5411B2"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -38,14 +42,16 @@ lto = "thin"
 # Config for 'cargo dist'
 [workspace.metadata.dist]
 # The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
-cargo-dist-version = "0.2.0-prerelease.5"
-# CI backends to support (see 'cargo dist generate-ci')
+cargo-dist-version = "0.4.0"
+# CI backends to support
 ci = ["github"]
 # The installers to generate for each app
-installers = ["shell", "powershell", "homebrew"]
+installers = ["shell", "powershell", "homebrew", "msi"]
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["x86_64-unknown-linux-gnu", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "aarch64-apple-darwin"]
+targets = ["x86_64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-musl", "x86_64-pc-windows-msvc"]
 # A GitHub repo to push Homebrew formulas to
 tap = "msfjarvis/homebrew-tap"
 # Publish jobs to run in CI
 publish-jobs = ["homebrew"]
+# Publish jobs to run in CI
+pr-run-mode = "plan"
