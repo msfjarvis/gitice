@@ -94,7 +94,7 @@
         ];
 
         packages = with pkgs; [
-          cargo-dist-unstable
+          cargo-dist
           cargo-nextest
           cargo-release
           git-cliff
