@@ -22,7 +22,7 @@ path-guid = "2995A4B3-1534-48CC-9D44-62713E5411B2"
 
 [dependencies]
 anyhow = "1.0.75"
-clap = { version = "4.4.9", features = ["color", "deprecated", "derive"] }
+clap = { version = "4.4.10", features = ["color", "deprecated", "derive"] }
 gix = "0.55.2"
 serde = { version = "1.0.193", default-features = false }
 serde_derive = "1.0.193"
