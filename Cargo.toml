@@ -21,7 +21,7 @@ path-guid = "2995A4B3-1534-48CC-9D44-62713E5411B2"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.76"
+anyhow = "1.0.77"
 clap = { version = "4.4.11", features = ["color", "deprecated", "derive"] }
 gix = "0.56.0"
 serde = { version = "1.0.193", default-features = false }
