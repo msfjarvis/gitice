@@ -1,6 +1,6 @@
 use crate::model::PersistableRepo;
 use anyhow::Context;
-use gix::{sec::trust::DefaultForLevel, Repository, ThreadSafeRepository};
+use gix::{remote::Direction, sec::trust::DefaultForLevel, Repository, ThreadSafeRepository};
 use std::{
     collections::HashMap,
     fs,
@@ -142,7 +142,7 @@ fn get_current_branch(repository: &Repository) -> Option<String> {
 fn get_remote_for_branch(repository: &Repository, branch_name: Option<&str>) -> Option<String> {
     let branch_name = branch_name?;
     repository
-        .branch_remote_name(branch_name)
+        .branch_remote_name(branch_name, Direction::Fetch)
         .map(|n| n.as_bstr().to_string())
 }
 
