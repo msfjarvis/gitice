@@ -93,6 +93,7 @@
           cargo-release
           git-cliff
           rustNightly
+          stdenv.cc
         ];
       };
     });
