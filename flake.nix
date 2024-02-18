@@ -70,7 +70,9 @@
         });
     in {
       checks = {
-        inherit gitice gitice-audit gitice-clippy gitice-fmt gitice-nextest;
+        inherit gitice gitice-clippy gitice-fmt gitice-nextest;
+        # TODO: Re-enable once https://github.com/NixOS/nixpkgs/issues/288064 is fixed
+        # inherit gitice-audit;
       };
 
       packages.default = gitice;
