@@ -25,7 +25,7 @@ eula = false
 [dependencies]
 anyhow = "1.0.80"
 clap = { version = "4.5.1", features = ["color", "deprecated", "derive"] }
-gix = { version = "0.58.0", default-features = false }
+gix = { version = "0.59.0", default-features = false }
 serde = { version = "1.0.197", default-features = false }
 serde_derive = "1.0.197"
 toml = "0.8.10"
