@@ -47,7 +47,7 @@ pub fn freeze_repos(dir: &str) -> anyhow::Result<()> {
                 let shared_repo =
                     match ThreadSafeRepository::discover_with_environment_overrides_opts(
                         path,
-                        Default::default(),
+                        gix::discover::upwards::Options::default(),
                         git_open_opts_map,
                     ) {
                         Ok(repo) => repo,
@@ -58,17 +58,23 @@ pub fn freeze_repos(dir: &str) -> anyhow::Result<()> {
                 let repository = shared_repo.to_thread_local();
                 let branch = get_current_branch(&repository);
                 let remote = get_remote_for_branch(&repository, branch.as_deref());
-                if let Some(branch) = branch &&
-                    let Some(remote) = remote &&
-                    let Ok(remote_url) = get_url(&repository, &remote) {
-                        let relative_path = entry.path().strip_prefix(Path::new(dir))?.to_str().unwrap().to_string();
-                        repos.insert(
-                            relative_path,
-                            PersistableRepo {
-                                remote_url,
-                                head: branch,
-                            },
-                        );
+                if let Some(branch) = branch
+                    && let Some(remote) = remote
+                {
+                    let remote_url = get_url(&repository, &remote);
+                    let relative_path = entry
+                        .path()
+                        .strip_prefix(Path::new(dir))?
+                        .to_str()
+                        .unwrap()
+                        .to_string();
+                    repos.insert(
+                        relative_path,
+                        PersistableRepo {
+                            remote_url,
+                            head: branch,
+                        },
+                    );
                 }
             }
         }
@@ -91,33 +97,7 @@ pub fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
             .args([
                 "clone",
                 &repo.remote_url,
-                PathBuf::from(&dir).join(&name).to_str().unwrap(),
-            ])
-            .output()
-            .context("Failed to run `git clone`. Perhaps git is not installed?")?;
-
-        if output.status.success() {
-            tracing::info!("Thawed {name} successfully.");
-        } else {
-            tracing::error!("{}", std::str::from_utf8(&output.stderr)?);
-        }
-    }
-
-    Ok(())
-}
-
-pub fn thaw(dir: &str, lockfile: &str) -> anyhow::Result<()> {
-    let lockfile = fs::read_to_string(lockfile).context(format!("Failed to read {lockfile}"))?;
-    let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
-
-    for (name, repo) in repos {
-        tracing::info!("Cloning {name} from {}", &repo.remote_url);
-
-        let output = Command::new("git")
-            .args([
-                "clone",
-                &repo.remote_url,
-                PathBuf::from(&dir).join(&name).to_str().unwrap(),
+                PathBuf::from(&dir).join(&name).to_str().expect("msg"),
             ])
             .output()
             .context("Failed to run `git clone`. Perhaps git is not installed?")?;
@@ -146,11 +126,10 @@ fn get_remote_for_branch(repository: &Repository, branch_name: Option<&str>) -> 
         .map(|n| n.as_bstr().to_string())
 }
 
-fn get_url(repo: &Repository, remote_name: &str) -> anyhow::Result<String> {
+fn get_url(repo: &Repository, remote_name: &str) -> String {
     let config = repo.config_snapshot();
-    let remotes = match config.plumbing().sections_by_name("remote") {
-        Some(sections) => sections,
-        None => return Ok(Default::default()),
+    let Some(remotes) = config.plumbing().sections_by_name("remote") else {
+        return String::default();
     };
 
     let mut remote_url: Option<String> = None;
@@ -165,10 +144,8 @@ fn get_url(repo: &Repository, remote_name: &str) -> anyhow::Result<String> {
         }
     }
 
-    let remote_url = match remote_url {
+    match remote_url {
         Some(url) => url,
-        None => return Ok(Default::default()),
-    };
-
-    Ok(remote_url)
+        None => String::default(),
+    }
 }
