@@ -25,7 +25,6 @@
   inputs.flake-compat.flake = false;
 
   outputs = {
-    self,
     nixpkgs,
     advisory-db,
     crane,
@@ -70,9 +69,7 @@
         });
     in {
       checks = {
-        inherit gitice gitice-clippy gitice-fmt gitice-nextest;
-        # TODO: Re-enable once https://github.com/NixOS/nixpkgs/issues/288064 is fixed
-        # inherit gitice-audit;
+        inherit gitice gitice-audit gitice-clippy gitice-fmt gitice-nextest;
       };
 
       packages.default = gitice;
