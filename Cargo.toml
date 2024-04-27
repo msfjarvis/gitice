@@ -26,8 +26,8 @@ eula = false
 anyhow = "1.0.82"
 clap = { version = "4.5.4", features = ["color", "deprecated", "derive"] }
 gix = { version = "0.62.0", default-features = false }
-serde = { version = "1.0.198", default-features = false }
-serde_derive = "1.0.198"
+serde = { version = "1.0.199", default-features = false }
+serde_derive = "1.0.199"
 toml = "0.8.12"
 tracing = "0.1.40"
 tracing-subscriber = "0.3.18"
