@@ -144,8 +144,5 @@ fn get_url(repo: &Repository, remote_name: &str) -> String {
         }
     }
 
-    match remote_url {
-        Some(url) => url,
-        None => String::default(),
-    }
+    remote_url.unwrap_or_default()
 }
