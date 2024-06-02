@@ -5,7 +5,6 @@ use std::{
     collections::HashMap,
     fs,
     path::{Path, PathBuf},
-    process::Command,
 };
 use walkdir::WalkDir;
 
@@ -91,22 +90,26 @@ pub fn thaw_repos(dir: &str, lockfile: &str) -> anyhow::Result<()> {
     let lockfile = fs::read_to_string(lockfile).context(format!("Failed to read {lockfile}"))?;
     let repos: HashMap<String, PersistableRepo> = toml::from_str(&lockfile)?;
 
+    // Clone each repo
     for (name, repo) in repos {
-        tracing::info!("Cloning {name} from {}", &repo.remote_url);
-        let output = Command::new("git")
-            .args([
-                "clone",
-                &repo.remote_url,
-                PathBuf::from(&dir).join(&name).to_str().expect("msg"),
-            ])
-            .output()
-            .context("Failed to run `git clone`. Perhaps git is not installed?")?;
+        let local_path = PathBuf::from(&dir).join(&name);
 
-        if output.status.success() {
-            tracing::info!("Thawed {name} successfully.");
-        } else {
-            tracing::error!("{}", std::str::from_utf8(&output.stderr)?);
-        }
+        let mut prepare_clone = gix::prepare_clone(repo.remote_url.clone(), local_path)
+            .context(format!("Failed to prepare cloning of repository {name}"))?;
+
+        tracing::info!("Cloning {name} from {}", &repo.remote_url);
+
+        let (mut prepare_checkout, _) = prepare_clone
+            .fetch_then_checkout(gix::progress::Discard, &gix::interrupt::IS_INTERRUPTED)
+            .context("Failed to clone repository")?;
+
+        tracing::info!("Checking out main worktree...");
+
+        prepare_checkout
+            .main_worktree(gix::progress::Discard, &gix::interrupt::IS_INTERRUPTED)
+            .context("Failed to checkout main worktree")?;
+
+        tracing::info!("Thawed {name} successfully.");
     }
 
     Ok(())
