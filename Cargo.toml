@@ -25,7 +25,7 @@ eula = false
 [dependencies]
 anyhow = "1.0.82"
 clap = { version = "4.5.4", features = ["color", "deprecated", "derive"] }
-gix = { version = "0.64.0", default-features = false , features = ["worktree-mutation", "blocking-network-client"] }
+gix = { version = "0.66.0", default-features = false , features = ["worktree-mutation", "blocking-network-client"] }
 serde = { version = "1.0.200", default-features = false }
 serde_derive = "1.0.200"
 toml = "0.8.12"
