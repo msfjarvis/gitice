@@ -12,7 +12,7 @@ homepage = "https://github.com/msfjarvis/gitice"
 license = "MIT/Apache-2.0"
 keywords = ["git", "snapshot", "backup", "restore"]
 readme = "README.md"
-include = ["src/**/*", "LICENSE-*", "README.md"]
+include = ["src/**/*", "/LICENSE-*", "/README.md"]
 
 [package.metadata.wix]
 upgrade-guid = "90907703-6CAD-4F13-AB11-D03BF51966EC"
