@@ -6,6 +6,155 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
+- Update rust crate toml to v0.8.14
+- Update rust crate clap to v4.5.6
+- Update rust crate clap to v4.5.7
+- Update rust crate clap to v4.5.8
+- Update serde monorepo to v1.0.204
+- Update rust crate clap to v4.5.9
+- Update rust crate toml to v0.8.15
+- Update rust crate clap to v4.5.10
+- Update rust crate gix to 0.64.0
+- Update rust crate clap to v4.5.11
+- Update rust crate toml to v0.8.16
+- Update rust crate toml to v0.8.17
+- Update rust crate clap to v4.5.12
+- Update rust crate toml to v0.8.19
+- Update rust crate clap to v4.5.13
+- Update serde monorepo to v1.0.205
+- Update rust crate clap to v4.5.14
+- Update serde monorepo to v1.0.206
+- Update serde monorepo to v1.0.207
+- Update serde monorepo to v1.0.208
+- Update rust crate clap to v4.5.16
+- Update rust crate gix to 0.66.0
+- Update serde monorepo to v1.0.209
+- Remove obsoleted input override
+- Update rust crate clap to v4.5.18
+- Update rust crate clap to v4.5.19
+- Update rust crate clap to v4.5.20
+- Update rust crate anyhow to v1.0.90
+- Update serde monorepo to v1.0.211
+- Update rust crate anyhow to v1.0.91
+- Update serde monorepo to v1.0.213
+- Update rust crate gix to 0.67.0
+- Update serde monorepo to v1.0.214
+- Update rust crate anyhow to v1.0.92
+- Update rust crate anyhow to v1.0.93
+- Update serde monorepo to v1.0.215
+- Update rust crate clap to v4.5.21
+
+### Miscellaneous Tasks
+
+- Update
+- Update
+- Upgrade to new Rust nightly
+- Remove non-existent flake input
+- Migrate CI to GHA
+- Update
+- Update
+- Adjust `flake.lock` maintenance schedule
+
+## [2.0.6] - 2024-06-02
+
+### Bug Fixes
+
+- Upgrade to cargo dist 0.14.1
+
+### Features
+
+- Clone repos using gitoxide (#34)
+
+### Miscellaneous Tasks
+
+- Bump gitice to version 2.0.6
+
+## [2.0.5] - 2024-06-01
+
+### Bug Fixes
+
+- Update serde monorepo to 1.0.191
+- Update rust crate toml to 0.8.8
+- Update serde monorepo to 1.0.192
+- Update rust crate clap to 4.4.8
+- Update rust crate tracing-subscriber to 0.3.18
+- Update serde monorepo to 1.0.193
+- Update rust crate clap to 4.4.9
+- Update rust crate clap to 4.4.10
+- Update rust crate clap to 4.4.11
+- Update rust crate gix to 0.56.0
+- Update rust crate anyhow to 1.0.76
+- Update rust crate anyhow to 1.0.77
+- Update rust crate clap to 4.4.12
+- Update rust crate gix to 0.57.0
+- Adjust for gix 0.57.0
+- Slim down gix dependency tree
+- Ignore release workflow
+- Update rust crate gix to 0.57.1
+- Update rust crate anyhow to 1.0.78
+- Update rust crate anyhow to 1.0.79
+- Update serde monorepo to 1.0.194
+- Update rust crate clap to 4.4.13
+- Update serde monorepo to 1.0.195
+- Update rust crate clap to 4.4.14
+- Update rust crate clap to 4.4.15
+- Update rust crate clap to 4.4.16
+- Update rust crate clap to 4.4.17
+- Update rust crate clap to 4.4.18
+- Update rust crate gix to 0.58.0
+- Update serde monorepo to 1.0.196
+- Update rust crate toml to 0.8.9
+- Update rust crate toml to 0.8.10
+- Update rust crate clap to 4.5.0
+- Update rust crate clap to 4.5.1
+- Update rust crate anyhow to 1.0.80
+- Update serde monorepo to 1.0.197
+- Update rust crate gix to 0.59.0
+- Update rust crate walkdir to 2.5.0
+- Update rust crate clap to 4.5.2
+- Update rust crate toml to 0.8.11
+- Update rust crate anyhow to 1.0.81
+- Upgrade to newer nightly
+- Address Clippy lints
+- Re-enable cargo-audit check
+- Update rust crate gix to 0.60.0
+- Update rust crate clap to 4.5.3
+- Update rust crate gix to 0.61.0
+- Update rust crate toml to 0.8.12
+- Update rust crate gix to 0.61.1
+- Update rust crate clap to 4.5.4
+- Update rust crate anyhow to 1.0.82
+- Update rust crate gix to 0.62.0
+- Update serde monorepo to 1.0.198
+- Update serde monorepo to 1.0.199
+- Update serde monorepo to 1.0.200
+- Update rust crate anyhow to v1.0.83
+- Update serde monorepo to v1.0.201
+- Update rust crate toml to v0.8.13
+- Update serde monorepo to v1.0.202
+- Update rust crate anyhow to v1.0.85
+- Update rust crate gix to 0.63.0
+- Update serde monorepo to v1.0.203
+
+### Features
+
+- Upgrade to 2024-05-24 nightly
+- Upgrade to 2024-05-25 nightly
+
+### Miscellaneous Tasks
+
+- Run `flake.lock` maintenance earlier
+- Bump cargo-dist
+- Bump gitice to version 2.0.5
+
+### Flake
+
+- Disable cargo-audit
+
+## [2.0.4] - 2023-11-02
+
+### Bug Fixes
+
 - Update rust crate clap to 4.4.0
 - Update serde to 1.0.187
 - Update serde to 1.0.188
@@ -31,14 +180,24 @@ All notable changes to this project will be documented in this file.
 - Update rust crate tracing to 0.1.40
 - Drop now-removed crane inputs
 - Update rust crate toml to 0.8.4
+- Update rust crate clap to 4.4.7
+- Update serde monorepo to 1.0.190
+- Update rust crate toml to 0.8.5
+- Update rust crate toml to 0.8.6
+- Use upstream cargo-dist
+- Drop unused `custom-nixpkgs` input
+- Upgrade `cargo-dist`
 
 ### Features
 
 - Upgrade to latest nightly
+- Setup git-cliff
 
 ### Miscellaneous Tasks
 
 - Update Garnix badges
+- Fix Garnix badge
+- Bump gitice to version 2.0.4
 
 ## [2.0.3] - 2023-08-24
 
