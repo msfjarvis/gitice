@@ -1,2 +1,4 @@
 # Reformat Nix files with Alejandra
 9168d646e8b56302103c3793ef2001acea8f753b
+# Reformatting Nix files with nixfmt-rfc-style
+a7b12817bf5457a79f89d549e9d2c665e879efac
