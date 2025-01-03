@@ -101,9 +101,9 @@ checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
 
 [[package]]
 name = "bstr"
-version = "1.11.1"
+version = "1.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "786a307d683a5bf92e6fd5fd69a7eb613751668d1d8d67d802846dfe367c62c8"
+checksum = "531a9155a481e2ee699d4f98f43c0ca4ff8ee1bfd55c31e9e98fb29d2b176fe0"
 dependencies = [
  "memchr",
  "regex-automata",
@@ -269,6 +269,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e13624c2627564efccf4934284bdd98cbaa14e79b0b5a141218e507b3a823456"
 dependencies = [
  "percent-encoding",
+]
+
+[[package]]
+name = "getrandom"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c4567c8db10ae91089c99af84c68c38da3ec2f087c3f82960bcdbf3656b6f4d7"
+dependencies = [
+ "cfg-if",
+ "libc",
+ "wasi",
 ]
 
 [[package]]
@@ -1254,9 +1265,9 @@ checksum = "d75a2a4b1b190afb6f5425f10f6a8f959d2ea0b9c2b1d79553551850539e4674"
 
 [[package]]
 name = "jiff"
-version = "0.1.18"
+version = "0.1.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d09ead9616bda43297ffc1fa32e01f5951c0f08cf5239a296a8d73f3b13fc2b6"
+checksum = "943611a469f78ab9afdac9022e473a80fca16a9deca6c5be3eb566d872231e76"
 dependencies = [
  "jiff-tzdb-platform",
  "log",
@@ -1617,12 +1628,13 @@ dependencies = [
 
 [[package]]
 name = "tempfile"
-version = "3.14.0"
+version = "3.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "28cce251fcbc87fac86a866eeb0d6c2d536fc16d06f184bb61aeae11aa4cee0c"
+checksum = "9a8a559c81686f576e8cd0290cd2a24a2a9ad80c98b3478856500fcbd7acd704"
 dependencies = [
  "cfg-if",
  "fastrand",
+ "getrandom",
  "once_cell",
  "rustix",
  "windows-sys 0.59.0",
@@ -1845,6 +1857,12 @@ dependencies = [
  "same-file",
  "winapi-util",
 ]
+
+[[package]]
+name = "wasi"
+version = "0.11.0+wasi-snapshot-preview1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423"
 
 [[package]]
 name = "winapi"
