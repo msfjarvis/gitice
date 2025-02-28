@@ -1,4 +1,3 @@
-#![feature(let_chains)]
 #![allow(clippy::missing_errors_doc, clippy::missing_panics_doc)]
 pub mod cli;
 pub mod git;

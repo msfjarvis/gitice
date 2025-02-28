@@ -57,24 +57,26 @@ pub fn freeze_repos(dir: &str) -> anyhow::Result<()> {
                 let repository = shared_repo.to_thread_local();
                 let branch = get_current_branch(&repository);
                 let remote = get_remote_for_branch(&repository, branch.as_deref());
-                if let Some(branch) = branch
-                    && let Some(remote) = remote
-                {
-                    let remote_url = get_url(&repository, &remote);
-                    let relative_path = entry
-                        .path()
-                        .strip_prefix(Path::new(dir))?
-                        .to_str()
-                        .unwrap()
-                        .to_string();
-                    repos.insert(
-                        relative_path,
-                        PersistableRepo {
-                            remote_url,
-                            head: branch,
-                        },
-                    );
-                }
+                let Some(branch) = branch else {
+                    continue;
+                };
+                let Some(remote) = remote else {
+                    continue;
+                };
+                let remote_url = get_url(&repository, &remote);
+                let relative_path = entry
+                    .path()
+                    .strip_prefix(Path::new(dir))?
+                    .to_str()
+                    .unwrap()
+                    .to_string();
+                repos.insert(
+                    relative_path,
+                    PersistableRepo {
+                        remote_url,
+                        head: branch,
+                    },
+                );
             }
         }
     }
