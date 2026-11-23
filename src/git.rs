@@ -1,6 +1,6 @@
 use crate::model::PersistableRepo;
 use anyhow::Context;
-use gix::{remote::Direction, sec::trust::DefaultForLevel, Repository, ThreadSafeRepository};
+use gix::{remote::Direction, Repository, ThreadSafeRepository};
 use std::{
     collections::HashMap,
     fs,
@@ -18,10 +18,7 @@ pub fn freeze_repos(dir: &str) -> anyhow::Result<()> {
             let path = format!("{}/.git", entry.path().display());
             let git_dir = Path::new(&path);
             if git_dir.exists() && git_dir.is_dir() {
-                let mut git_open_opts_map =
-                    gix::sec::trust::Mapping::<gix::open::Options>::default();
-
-                // don't use the global git configs
+                // Don't use global Git config, but honor environment overrides and includes.
                 let config = gix::open::permissions::Config {
                     git_binary: false,
                     system: false,
@@ -30,24 +27,14 @@ pub fn freeze_repos(dir: &str) -> anyhow::Result<()> {
                     env: true,
                     includes: true,
                 };
-                // change options for config permissions without touching anything else
-                git_open_opts_map.reduced =
-                    git_open_opts_map
-                        .reduced
-                        .permissions(gix::open::Permissions {
-                            config,
-                            ..gix::open::Permissions::default_for_level(gix::sec::Trust::Reduced)
-                        });
-                git_open_opts_map.full =
-                    git_open_opts_map.full.permissions(gix::open::Permissions {
-                        config,
-                        ..gix::open::Permissions::default_for_level(gix::sec::Trust::Full)
-                    });
                 let shared_repo =
                     match ThreadSafeRepository::discover_with_environment_overrides_opts(
                         path,
                         gix::discover::upwards::Options::default(),
-                        git_open_opts_map,
+                        |mut options, _trust| {
+                            options.permissions.config = config;
+                            options
+                        },
                     ) {
                         Ok(repo) => repo,
                         Err(e) => {

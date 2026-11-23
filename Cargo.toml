@@ -8,7 +8,6 @@ authors = [
 edition = "2021"
 description = "Freeze your local git repositories for easy restoration"
 repository = "https://github.com/msfjarvis/gitice"
-homepage = "https://github.com/msfjarvis/gitice"
 license = "MIT/Apache-2.0"
 keywords = ["git", "snapshot", "backup", "restore"]
 readme = "README.md"
@@ -25,7 +24,7 @@ eula = false
 [dependencies]
 anyhow = "1.0.82"
 clap = { version = "4.5.4", features = ["color", "deprecated", "derive"] }
-gix = { version = "0.90.0", default-features = false , features = ["blocking-network-client", "sha1", "worktree-mutation"] }
+gix = { version = "0.91.0", default-features = false , features = ["blocking-network-client", "sha1", "worktree-mutation"] }
 serde = { version = "1.0.200", default-features = false }
 serde_derive = "1.0.200"
 toml = "1.0.0"

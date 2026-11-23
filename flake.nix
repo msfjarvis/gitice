@@ -88,7 +88,9 @@
 
         packages.default = gitice;
 
-        apps.default = flake-utils.lib.mkApp { drv = gitice; };
+        apps.default = flake-utils.lib.mkApp { drv = gitice; } // {
+          meta.description = "Freeze and restore local Git repositories";
+        };
 
         devShells.default = pkgs.devshell.mkShell {
           bash = {
